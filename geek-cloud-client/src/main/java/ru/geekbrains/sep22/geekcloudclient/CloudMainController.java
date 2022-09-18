@@ -16,6 +16,7 @@ public class CloudMainController implements Initializable {
     public ListView<String> clientView;
     public ListView<String> serverView;
     private String currentDirectory;
+    private static final String DIRECTORY_SERVER = "C:\\Users\\Виктория\\IdeaProjects\\geek-cloud\\server_files";
 
     private DataInputStream dis;
     private DataOutputStream dos;
@@ -42,6 +43,29 @@ public class CloudMainController implements Initializable {
                 System.err.println("e = " + e.getMessage());
             }
         }
+        fillView(serverView, getFiles(DIRECTORY_SERVER));
+    }
+
+    public void sendToClient (ActionEvent actionEvent) {
+        String fileName = serverView.getSelectionModel().getSelectedItem();
+        String filePath = DIRECTORY_SERVER + "/" + fileName;
+        File file = new File(filePath);
+        if (file.isFile()) {
+            try {
+                dos.writeUTF(SEND_FILE_COMMAND);
+                dos.writeUTF(fileName);
+                dos.writeLong(file.length());
+                try (FileInputStream fis = new FileInputStream(file)) {
+                    byte[] bytes = fis.readAllBytes();
+                    dos.write(bytes);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } catch (Exception e) {
+                System.err.println("e = " + e.getMessage());
+            }
+        }
+        fillView(clientView, getFiles(currentDirectory));
     }
 
     private void initNetwork() {
@@ -56,7 +80,7 @@ public class CloudMainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initNetwork();
         setCurrentDirectory(System.getProperty("user.home"));
-        fillView(clientView, getFiles(currentDirectory));
+       // fillView(clientView, getFiles(currentDirectory));
         clientView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 String selected = clientView.getSelectionModel().getSelectedItem();
@@ -66,6 +90,8 @@ public class CloudMainController implements Initializable {
                 }
             }
         });
+        System.getProperty(DIRECTORY_SERVER);
+        fillView(serverView, getFiles(DIRECTORY_SERVER));
     }
 
     private void setCurrentDirectory(String directory) {

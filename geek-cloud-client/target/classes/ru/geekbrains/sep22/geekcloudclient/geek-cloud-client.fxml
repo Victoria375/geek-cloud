@@ -16,7 +16,7 @@ fx:controller="ru.geekbrains.sep22.geekcloudclient.CloudMainController">
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="281.0" layoutY="222.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="38.0" text="&lt;">
+      <Button onAction="#sendToClient" layoutX="281.0" layoutY="222.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="38.0" text="&lt;">
          <font>
             <Font size="14.0" />
          </font>
