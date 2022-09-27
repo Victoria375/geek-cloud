@@ -10,6 +10,7 @@ import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -80,6 +81,60 @@ public class TelnetTerminal {
                     .map(p -> p.getFileName().toString())
                     .collect(Collectors.joining("\n\r"));
             channel.write(ByteBuffer.wrap(files.getBytes(StandardCharsets.UTF_8)));
+        } else if (command.startsWith("cd")) {
+            String[] comm = command.split(" +");
+            if (comm.length == 2) {
+                String directory = comm[1];
+                Path path = current.resolve(directory);
+                if (Files.exists(path)) {
+                    current = path;
+                    String message = "change directory...\n\r ";
+                    channel.write(ByteBuffer.wrap(message.getBytes(StandardCharsets.UTF_8)));
+                } else {
+                    String message = "no directory with that name: " + directory + "\n\r";
+                    channel.write(ByteBuffer.wrap(message.getBytes(StandardCharsets.UTF_8)));
+                }
+            } else {
+                String message = "add directory name\n\r ";
+                channel.write(ByteBuffer.wrap(message.getBytes(StandardCharsets.UTF_8)));
+            }
+        } else if (command.startsWith("touch")) {
+            String[] comm = command.split(" +");
+            if (comm.length == 2) {
+                String fileName = comm[1];
+                Path file = Paths.get(current + "/" + fileName);
+                Files.createFile(file);
+            } else {
+                String message = "add file name\n\r ";
+                channel.write(ByteBuffer.wrap(message.getBytes(StandardCharsets.UTF_8)));
+            }
+        } else if (command.startsWith("mkdir")) {
+            String[] comm = command.split(" +");
+            if (comm.length == 2) {
+                String dirName = comm[1];
+                Path path = Paths.get(current + "/" + dirName);
+                Files.createDirectory(path);
+            } else {
+                String message = "add directory name\n\r ";
+                channel.write(ByteBuffer.wrap(message.getBytes(StandardCharsets.UTF_8)));
+            }
+        }
+
+        else if (command.startsWith("cat")) {
+            String[] comm = command.split(" +");
+            if (comm.length == 2) {
+                String fileName = comm[1];
+                Path path = current.resolve(fileName);
+                if (Files.exists(path)) {
+                    System.out.println(Files.readString(path));
+                } else {
+                    String message = "no file with that name: " + fileName + "\n\r";
+                    channel.write(ByteBuffer.wrap(message.getBytes(StandardCharsets.UTF_8)));
+                }
+            } else {
+                String message = "add file name\n\r ";
+                channel.write(ByteBuffer.wrap(message.getBytes(StandardCharsets.UTF_8)));
+            }
         } else {
             byte[] bytes = command.getBytes(StandardCharsets.UTF_8);
             channel.write(ByteBuffer.wrap(bytes));
