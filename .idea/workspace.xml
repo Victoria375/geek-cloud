@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a64d1309-073b-44e1-adf4-801e93563b68" name="Changes" comment="homework lesson1.1">
-      <change afterPath="$PROJECT_DIR$/geek-cloud-common/1.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/geek-cloud-common/copy.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/geek-cloud-common/forest.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/geek-cloud-common/src/main/java/ru/geekbrains/nio/ChannelExamples.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/geek-cloud-common/src/main/java/ru/geekbrains/nio/PathExamples.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/geek-cloud-common/src/main/java/ru/geekbrains/nio/server/TelnetTerminal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="a64d1309-073b-44e1-adf4-801e93563b68" name="Changes" comment="lesson 2">
+      <change beforePath="$PROJECT_DIR$/geek-cloud-common/src/main/java/ru/geekbrains/nio/server/TelnetTerminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/geek-cloud-common/src/main/java/ru/geekbrains/nio/server/TelnetTerminal.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,10 +22,11 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="hw_lesson_2" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -145,10 +140,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.TelnetTerminal" />
-        <item itemvalue="Application.ChannelExamples" />
         <item itemvalue="Application.PathExamples" />
         <item itemvalue="Application.CloudServer" />
         <item itemvalue="Application.CloudClient" />
+        <item itemvalue="Application.ChannelExamples" />
       </list>
     </recent_temporary>
   </component>
@@ -161,6 +156,14 @@
       <option name="presentableId" value="Default" />
       <updated>1663432458577</updated>
     </task>
+    <task id="LOCAL-00001" summary="lesson 2">
+      <created>1664303318084</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1664303318084</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -176,5 +179,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="lesson 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="lesson 2" />
   </component>
 </project>

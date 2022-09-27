@@ -30,7 +30,7 @@ public class TelnetTerminal {
     private ByteBuffer buf;
 
     public TelnetTerminal() throws IOException {
-        current = Path.of("common");
+        current = Path.of("geek-cloud-common");
         buf = ByteBuffer.allocate(256);
         server = ServerSocketChannel.open();
         selector = Selector.open();
