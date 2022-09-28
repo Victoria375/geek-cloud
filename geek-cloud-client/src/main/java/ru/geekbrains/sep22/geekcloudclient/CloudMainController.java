@@ -1,14 +1,22 @@
 package ru.geekbrains.sep22.geekcloudclient;
 
+import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
+import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import ru.geekbrains.DaemonThreadFactory;
+import ru.geekbrains.model.CloudMessage;
+import ru.geekbrains.model.FileMessage;
+import ru.geekbrains.model.FileRequest;
+import ru.geekbrains.model.ListMessage;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,8 +30,10 @@ public class CloudMainController implements Initializable {
     public ListView<String> serverView;
     private String currentDirectory;
 
-    private DataInputStream dis;
-    private DataOutputStream dos;
+    private Network<ObjectDecoderInputStream, ObjectEncoderOutputStream> network;
+
+//    private DataInputStream dis;
+//    private DataOutputStream dos;
     private Socket socket;
     private boolean needReadMessages = true;
     private DaemonThreadFactory factory;
@@ -32,62 +42,40 @@ public class CloudMainController implements Initializable {
 
     public void downloadFile(ActionEvent actionEvent) throws IOException {
         String fileName = serverView.getSelectionModel().getSelectedItem();
-        dos.writeUTF(GET_FILE_COMMAND.getSimpleName());
-        dos.writeUTF(fileName);
-        dos.flush();
+        network.getOutputStream().writeObject(new FileRequest(fileName));
     }
 
-    public void sendToServer(ActionEvent actionEvent) {
+    public void sendToServer(ActionEvent actionEvent) throws IOException {
         String fileName = clientView.getSelectionModel().getSelectedItem();
-        String filePath = currentDirectory + "/" + fileName;
-        File file = new File(filePath);
-        if (file.isFile()) {
-            try {
-                System.out.println("File " + fileName + " sent to server");
-                dos.writeUTF(SEND_FILE_COMMAND.getSimpleName());
-                dos.writeUTF(fileName);
-                dos.writeLong(file.length());
-                try (FileInputStream fis = new FileInputStream(file)) {
-                    byte[] bytes = fis.readAllBytes();
-                    dos.write(bytes);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            } catch (Exception e) {
-                System.err.println("e = " + e.getMessage());
-            }
-        }
+        network.getOutputStream().writeObject(new FileMessage(Path.of(currentDirectory).resolve(fileName)));
     }
 
     private void readMessages() {
         try {
             while (needReadMessages) {
-                String command = dis.readUTF();
-                if (SEND_FILE_COMMAND.getSimpleName().equals(command)) {
-                    readFileFromStream(dis, currentDirectory);
+                CloudMessage message = (CloudMessage) network.getInputStream().readObject();
+                if (message instanceof FileMessage fileMessage) {
+                    Files.write(Path.of(currentDirectory).resolve(fileMessage.getFileName()), fileMessage.getBytes());
                     Platform.runLater(() -> fillView(clientView, getFiles(currentDirectory)));
-                } else if (GET_FILES_LIST_COMMAND.getSimpleName().equals(command)) {
-                    System.out.println("Received command: " + GET_FILES_LIST_COMMAND.getSimpleName());
-                    List<String> files = new ArrayList<>();
-                    int size = dis.readInt();
-                    for (int i = 0; i < size; i++) {
-                        String file = dis.readUTF();
-                        files.add(file);
-                    }
-                    Platform.runLater(() -> fillView(serverView, files));
+                } else if (message instanceof ListMessage listMessage) {
+                    Platform.runLater(() -> fillView(serverView, listMessage.getFiles()));
                 }
             }
         } catch (Exception e) {
             System.err.println("Server off");
+            e.printStackTrace();
         }
     }
 
     private void initNetwork() {
         try {
             socket = new Socket("localhost", 8189);
-            dis = new DataInputStream(socket.getInputStream());
-            dos = new DataOutputStream(socket.getOutputStream());
-            factory.getThread(this::readMessages, "cloud-client-read-thread-%").start();
+            network = new Network<>(
+                    new ObjectDecoderInputStream(socket.getInputStream()),
+                    new ObjectEncoderOutputStream(socket.getOutputStream())
+            );
+            factory.getThread(this::readMessages, "cloud-client-read-thread")
+                    .start();
         } catch (Exception e) {
             e.printStackTrace();
         }
