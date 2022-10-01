@@ -7,10 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import ru.geekbrains.DaemonThreadFactory;
-import ru.geekbrains.model.CloudMessage;
-import ru.geekbrains.model.FileMessage;
-import ru.geekbrains.model.FileRequest;
-import ru.geekbrains.model.ListMessage;
+import ru.geekbrains.model.*;
 
 import java.io.*;
 import java.net.Socket;
@@ -94,6 +91,16 @@ public class CloudMainController implements Initializable {
                 File selectedFile = new File(currentDirectory + "/" + selected);
                 if (selectedFile.isDirectory()) {
                     setCurrentDirectory(currentDirectory + "/" + selected);
+                }
+            }
+        });
+        serverView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                String selected = serverView.getSelectionModel().getSelectedItem();
+                try {
+                    network.getOutputStream().writeObject(new ServerFilesRequest(selected));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
         });
