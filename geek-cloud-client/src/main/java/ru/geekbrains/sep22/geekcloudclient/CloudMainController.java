@@ -39,12 +39,30 @@ public class CloudMainController implements Initializable {
 
     public void downloadFile(ActionEvent actionEvent) throws IOException {
         String fileName = serverView.getSelectionModel().getSelectedItem();
-        network.getOutputStream().writeObject(new FileRequest(fileName));
+        network.getOutputStream().writeObject(new FileRequest(FileRequest.Command.DOWNLOAD, fileName));
     }
 
     public void sendToServer(ActionEvent actionEvent) throws IOException {
         String fileName = clientView.getSelectionModel().getSelectedItem();
         network.getOutputStream().writeObject(new FileMessage(Path.of(currentDirectory).resolve(fileName)));
+    }
+
+    public void renameClientFile(ActionEvent actionEvent) throws IOException {
+        //
+    }
+
+    public void deleteClientFile(ActionEvent actionEvent) throws IOException {
+        String fileName = clientView.getSelectionModel().getSelectedItem();
+        network.getOutputStream().writeObject(new FileRequest(FileRequest.Command.DELETE, fileName));
+    }
+
+    public void renameServerFile(ActionEvent actionEvent) throws IOException {
+        //
+    }
+
+    public void deleteServerFile(ActionEvent actionEvent) throws IOException {
+        String fileName = serverView.getSelectionModel().getSelectedItem();
+        network.getOutputStream().writeObject(new FileRequest(FileRequest.Command.DELETE, fileName));
     }
 
     private void readMessages() {
