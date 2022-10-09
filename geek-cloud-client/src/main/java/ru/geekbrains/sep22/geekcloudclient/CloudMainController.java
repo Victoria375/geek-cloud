@@ -4,8 +4,11 @@ import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
 import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 import ru.geekbrains.DaemonThreadFactory;
 import ru.geekbrains.model.*;
 
@@ -48,7 +51,24 @@ public class CloudMainController implements Initializable {
     }
 
     public void renameClientFile(ActionEvent actionEvent) throws IOException {
-        //
+        File selected = new File(clientView.getSelectionModel().getSelectedItem());
+        renameFile(selected);
+    }
+
+    private void renameFile (File file) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("rename.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setTitle("Rename window");
+        stage.setScene(scene);
+        stage.show();
+
+        RenameController renameController = fxmlLoader.getController();
+        if (renameController.getResult()) {
+            String newName = renameController.getNewFileName();
+            File newFileName = new File(newName);
+            file.renameTo(newFileName);
+        }
     }
 
     public void deleteClientFile(ActionEvent actionEvent) throws IOException {
@@ -57,7 +77,10 @@ public class CloudMainController implements Initializable {
     }
 
     public void renameServerFile(ActionEvent actionEvent) throws IOException {
-        //
+        String fileName = serverView.getSelectionModel().getSelectedItem();
+        network.getOutputStream().writeObject(new FileRequest(FileRequest.Command.RENAME, fileName));
+        File selected = new File(fileName);
+        renameFile(selected);
     }
 
     public void deleteServerFile(ActionEvent actionEvent) throws IOException {
