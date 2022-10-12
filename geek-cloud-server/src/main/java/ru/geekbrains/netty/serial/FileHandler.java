@@ -37,6 +37,9 @@ public class FileHandler extends SimpleChannelInboundHandler<CloudMessage> {
                         case DOWNLOAD:
                             ctx.writeAndFlush(new FileMessage(serverDir.resolve(fileRequest.getFileName())));
                             break;
+                        case RENAME:
+                            // ??
+                            break;
                     }
                 }
         } else if (cloudMessage instanceof ServerFilesRequest serverFilesRequest) {
