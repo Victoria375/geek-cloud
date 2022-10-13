@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a64d1309-073b-44e1-adf4-801e93563b68" name="Changes" comment="hw lesson 4">
-      <change afterPath="$PROJECT_DIR$/geek-cloud-client/src/main/java/ru/geekbrains/sep22/geekcloudclient/RenameController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/geek-cloud-client/src/main/resources/ru/geekbrains/sep22/geekcloudclient/rename.fxml" afterDir="false" />
+    <list default="true" id="a64d1309-073b-44e1-adf4-801e93563b68" name="Changes" comment="hw lesson 5">
+      <change afterPath="$PROJECT_DIR$/geek-cloud-client/src/main/resources/ru/geekbrains/sep22/geekcloudclient/login.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/geek-cloud-common/src/main/java/ru/geekbrains/model/AuthRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/geek-cloud-client/src/main/java/ru/geekbrains/sep22/geekcloudclient/CloudMainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/geek-cloud-client/src/main/java/ru/geekbrains/sep22/geekcloudclient/CloudMainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/geek-cloud-server/src/main/java/ru/geekbrains/netty/serial/FileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/geek-cloud-server/src/main/java/ru/geekbrains/netty/serial/FileHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geek-cloud-client/target/classes/ru/geekbrains/sep22/geekcloudclient/CloudMainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/geek-cloud-client/target/classes/ru/geekbrains/sep22/geekcloudclient/CloudMainController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geek-cloud-common/src/main/java/ru/geekbrains/model/MessageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/geek-cloud-common/src/main/java/ru/geekbrains/model/MessageType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +64,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="18" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/geek-cloud-common/src/main/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/geek-cloud-client/src/main/resources/ru/geekbrains/sep22/geekcloudclient" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -74,17 +75,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Виктория\IdeaProjects\geek-cloud\geek-cloud-common\src\main\resources" />
       <recent name="C:\Users\Виктория\IdeaProjects\geek-cloud\geek-cloud-client\src\main\resources\ru\geekbrains\sep22\geekcloudclient" />
       <recent name="C:\Users\Виктория\IdeaProjects\geek-cloud\geek-cloud-client\src\main\resources" />
       <recent name="C:\Users\Виктория\IdeaProjects\geek-cloud\geek-cloud-common" />
       <recent name="C:\Users\Виктория\IdeaProjects\geek-cloud\geek-cloud-common\src\main\java\ru\geekbrains" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Виктория\IdeaProjects\geek-cloud\geek-cloud-client\src\main\resources\ru\geekbrains\sep22\geekcloudclient" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="ru.geekbrains.sep22.geekcloudclient" />
+      <recent name="C:\Users\Виктория\IdeaProjects\geek-cloud\.idea" />
     </key>
   </component>
   <component name="RunManager" selected="Application.CloudClient">
@@ -157,9 +152,9 @@
       <list>
         <item itemvalue="Application.CloudClient" />
         <item itemvalue="Application.FileServer" />
-        <item itemvalue="Application.Main" />
-        <item itemvalue="Application.StreamExamples" />
         <item itemvalue="Application.TextProcessor" />
+        <item itemvalue="Application.StreamExamples" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
