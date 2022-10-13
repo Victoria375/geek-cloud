@@ -92,7 +92,11 @@ public class CloudMainController implements Initializable {
         try {
             while (needReadMessages) {
                 CloudMessage message = (CloudMessage) network.getInputStream().readObject();
-                if (message instanceof FileMessage fileMessage) {
+                if (message instanceof AuthRequest authRequest){
+                    if (authRequest.isAuthorization()){
+                        fillView(clientView, getFiles(currentDirectory));
+                    }
+                } else if (message instanceof FileMessage fileMessage) {
                     Files.write(Path.of(currentDirectory).resolve(fileMessage.getFileName()), fileMessage.getBytes());
                     Platform.runLater(() -> fillView(clientView, getFiles(currentDirectory)));
                 } else if (message instanceof ListMessage listMessage) {
@@ -125,7 +129,7 @@ public class CloudMainController implements Initializable {
         factory = new DaemonThreadFactory();
         initNetwork();
         setCurrentDirectory(System.getProperty("user.home"));
-        fillView(clientView, getFiles(currentDirectory));
+        //fillView(clientView, getFiles(currentDirectory));
         clientView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 String selected = clientView.getSelectionModel().getSelectedItem();
@@ -168,6 +172,13 @@ public class CloudMainController implements Initializable {
             }
         }
         return List.of();
+    }
+
+    public void tryAuth(ActionEvent actionEvent) throws IOException {
+        //Network.start();
+        initNetwork();
+        network.getOutputStream().writeObject(new AuthRequest("login","password"));;
+        readMessages();
     }
 
 
