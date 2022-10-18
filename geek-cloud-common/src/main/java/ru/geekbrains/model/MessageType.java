@@ -4,5 +4,6 @@ public enum MessageType {
     LIST,
     FILE_REQUEST,
     FILE,
-    SERVER_FILES_REQUEST
+    SERVER_FILES_REQUEST,
+    AUTHENTICATION
 }

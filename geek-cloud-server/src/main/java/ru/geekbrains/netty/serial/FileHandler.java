@@ -24,7 +24,9 @@ public class FileHandler extends SimpleChannelInboundHandler<CloudMessage> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CloudMessage cloudMessage) throws Exception {
         log.debug("Received: {}", cloudMessage.getType());
-        if (cloudMessage instanceof FileMessage fileMessage) {
+        if (cloudMessage instanceof Authentication) {
+            //request
+        } else if (cloudMessage instanceof FileMessage fileMessage) {
             Files.write(serverDir.resolve(fileMessage.getFileName()), fileMessage.getBytes());
             ctx.writeAndFlush(new ListMessage(serverDir));
         } else if (cloudMessage instanceof FileRequest fileRequest) {
